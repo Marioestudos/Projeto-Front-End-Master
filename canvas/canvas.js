@@ -42,6 +42,37 @@ const rightPddle = {
         canvasCtx.fillRect(this.x,this.y,this.w,this.h)
     }
 }
+// object score
+const score ={
+    human:1,
+    computer:2,
+    draw: function(){
+        canvasCtx.font = "bold 72px Arial"
+        canvasCtx.textAlign = "center"
+        canvasCtx.fillStyle ="#01341D"
+        canvasCtx.fillText(this.human,field.w /4 ,100)
+        canvasCtx.fillText(this.computer,field.w /4 + window.innerWidth /2 ,100)
+    }
+}
+// object bool
+const boll = {
+    x:200,
+    y:300,
+    r:20,
+    speed:5,
+    _move: function () {
+        this.x +=1 * this.speed,
+        this.y +=1 * this.speed
+    },
+    draw: function(){
+        canvasCtx.fillStyle ="#fff"  ,
+        canvasCtx.beginPath()
+        canvasCtx.arc(this.x,this.y,this.r,0,2*Math.PI,false)
+        canvasCtx.fill()
+        this. _move()
+    }
+}
+
 
 // fuctions for elemet canavas 
 function setup()
@@ -61,15 +92,10 @@ function draw()
     //rigth racket drawing
     rightPddle.draw()
     // ball
-    canvasCtx.beginPath()
-    canvasCtx.arc(200,300,20,0,2*Math.PI,false)
-    canvasCtx.fill()
+    boll.draw()
     // drawing stage
-    canvasCtx.font = "bold 72px Arial"
-    canvasCtx.textAlign = "center"
-    canvasCtx.fillStyle ="#01341D"
-    canvasCtx.fillText("2",window.innerWidth /4 ,100)
-    canvasCtx.fillText("1",window.innerWidth /4 + window.innerWidth /2 ,100)
+   score.draw()
 }
 setup()
 draw();
+window.setInterval(draw, 1000 / 60)
