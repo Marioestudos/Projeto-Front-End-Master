@@ -27,6 +27,10 @@ function draw()
     canvasCtx.fillRect(10,300,linecernter,200)
     //rigth racket drawing
     canvasCtx.fillRect( window.innerWidth -linecernter - 10,150,linecernter,200)
+    // ball
+    canvasCtx.beginPath()
+    canvasCtx.arc(200,300,20,0,2*Math.PI,false)
+    canvasCtx.fill()
 }
 setup()
 draw();
