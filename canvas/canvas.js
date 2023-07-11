@@ -12,6 +12,8 @@ const field = {
         canvasCtx.fillRect(0,0 ,this.w, this.h)
     }
 }
+//object moause
+const mouse = {x:0,y:0}
 // object line
 const line  = {
     w:15,
@@ -24,12 +26,16 @@ const line  = {
 //object racket
 const leftPddle = {
     x: gapx,
-    y: 100,
+    y: 0,
     w:line.w,
     h:200,
+    _move: function(){
+        this.y = mouse.y - this.h /2
+    },
     draw: function(){
         canvasCtx.fillStyle ="#fff"
         canvasCtx.fillRect(this.x,this.y,this.w,this.h)
+        this._move()
     }
 }
 const rightPddle = {
@@ -96,6 +102,29 @@ function draw()
     // drawing stage
    score.draw()
 }
+
+window.AnimateFramen = (
+    function(){
+        return(
+            window.requestAnimationFrame ||
+            window.webkiRequestAnimationFrame ||
+            window.moz.requestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function(calback){
+                window.setInterval(draw, 1000 / 60)
+         } 
+         )
+    }
+) ()
+function main(){
+    AnimateFramen(main)
+    draw()
+}
 setup()
-draw();
-window.setInterval(draw, 1000 / 60)
+main()
+canvasE1.addEventListener("mousemove",  function(e){
+    mouse.x = e.pageX;
+    mouse.y = e.pageY;
+    
+})
