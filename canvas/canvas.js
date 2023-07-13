@@ -43,9 +43,13 @@ const rightPddle = {
     y: 100,
     w:line.w,
     h:200,
+    _move: function(){
+        this.y = boll.y
+    },
     draw: function(){
         canvasCtx.fillStyle ="#fff"
         canvasCtx.fillRect(this.x,this.y,this.w,this.h)
+        this._move()
     }
 }
 // object score
@@ -62,13 +66,30 @@ const score ={
 }
 // object bool
 const boll = {
-    x:200,
-    y:300,
+    x:0,
+    y:0,
     r:20,
     speed:5,
+    directionX:1,
+    directionY:1,
+    _calcposition:function(){
+        if(
+            (this.y - this.r < 0 && this. directionY < 0) ||
+            (this.y > field.h -this.r && this.directionY >0)
+            )
+            {
+            this._reverseY()
+        }
+    },
+    _reverseY: function(){
+     this.directionY *= -1
+    },
+    _reverseX: function(){
+     this.directionX *= -1
+    },
     _move: function () {
-        this.x +=1 * this.speed,
-        this.y +=1 * this.speed
+        this.x += this.directionX * this.speed,
+        this.y += this.directionY * this.speed
     },
     draw: function(){
         canvasCtx.fillStyle ="#fff"  ,
@@ -76,6 +97,7 @@ const boll = {
         canvasCtx.arc(this.x,this.y,this.r,0,2*Math.PI,false)
         canvasCtx.fill()
         this. _move()
+        this._calcposition()
     }
 }
 
